@@ -25,7 +25,7 @@ public class Streamers {
         employeeList.add(new Employee(277, "Anuj Chettiar", 31, "Male", "Product Development", 2012, 35700.0));
 
         //3.1 : How many male and female employees are there in the organization?
-        Map<String, Long> genderCount = employeeList.stream().collect(Collectors.groupingBy(Employee::getGender, Collectors.counting()));
+        Map<String, Long> genderCount = employeeList.stream().collect(Collectors.groupingBy(Employee::getGender, LinkedHashMap::new,Collectors.counting()));
         System.out.println("gender count  = "+genderCount);
 
         //3.2 : Print the name of all departments in the organization?
@@ -48,6 +48,9 @@ public class Streamers {
         Map<String, Long> res = employeeList.stream().filter(emp -> emp.getDepartment().equals("Sales And Marketing")).collect(Collectors.groupingBy(Employee::getGender, Collectors.counting()));
         System.out.println("male and Female emp in sales and marketing dept -> "+res);
 
+        Double v = employeeList.stream().map(m -> m.getSalary()).max(Double::compare).get();
+        System.out.println("max salary -----> "+v);
+
         String str = "qqqQwesrt";
         Map<String, Long> val = str.toLowerCase().chars().mapToObj(c -> Character.toString((char) c)).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         System.out.println(val);
@@ -61,5 +64,39 @@ public class Streamers {
 
         System.out.println(vallll);
 
+
+        System.out.println("**************************************************");
+
+        Map<String, Long> mfCount = employeeList.stream().collect(Collectors.groupingBy(Employee::getGender, Collectors.counting()));
+        System.out.println(mfCount);
+
+        System.out.print("deptCount ---> ");
+        employeeList.stream().map(Employee::getDepartment).distinct().forEach(System.out::print);
+        System.out.println();
+
+        Map<String, Double> avgEmpAge = employeeList.stream().collect(Collectors.groupingBy(Employee::getGender, Collectors.averagingDouble(Employee::getAge)));
+        System.out.println(avgEmpAge);
+
+        System.out.println(employeeList.stream().collect(Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary))).get());
+
+        employeeList.stream().filter(e -> e.getYearOfJoining()>2015).map(m -> m.getName()).forEach(System.out::println);
+
+        System.out.println(employeeList.stream().collect(Collectors.groupingBy(Employee::getDepartment, Collectors
+                .averagingDouble(Employee::getSalary))));
+
+        System.out.println(employeeList.stream().filter(e -> e.getGender()=="Male" && e.getDepartment()=="Product Development").collect(Collectors.minBy(Comparator.comparingInt(Employee::getAge))).get());
+        System.out.println(employeeList.stream().filter(e -> e.getGender()=="Male" && e.getDepartment()=="Product Development").min(Comparator.comparingInt(Employee::getAge)).get());
+
+        System.out.println(employeeList.stream().min(Comparator.comparingInt(Employee::getYearOfJoining)).get());
+
+        System.out.println(employeeList.stream().collect(Collectors.groupingBy(Employee::getDepartment)));
+
+        DoubleSummaryStatistics value = employeeList.stream().collect(Collectors.summarizingDouble(Employee::getSalary));
+        System.out.println(value.getAverage());
+        System.out.println(value.getSum());
+
+        System.out.println(employeeList.stream().collect(Collectors.partitioningBy(i -> i.getAge()>25)));
+
+        System.out.println(employeeList.stream().max(Comparator.comparingInt(Employee::getAge)).get());
     }
 }
