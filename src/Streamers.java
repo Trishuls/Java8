@@ -59,7 +59,10 @@ public class Streamers {
 
         List<String> helloList = Arrays.asList("olleh","holle","helloo","HELLO");
 
-        List<String> vallll = helloList.stream().filter(i -> i.toLowerCase().chars().mapToObj(c -> Character.toString((char) c)).collect(Collectors.groupingBy(Function.identity(), Collectors.counting())).equals(hello.toLowerCase().chars().mapToObj(c -> Character.toString((char) c))
+        List<String> vallll = helloList.stream()
+                .filter(i -> i.toLowerCase().chars().mapToObj(c -> Character.toString((char) c))
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .equals(hello.toLowerCase().chars().mapToObj(c -> Character.toString((char) c))
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())))).collect(Collectors.toList());
 
         System.out.println(vallll);
