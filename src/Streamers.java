@@ -65,7 +65,7 @@ public class Streamers {
                 .equals(hello.toLowerCase().chars().mapToObj(c -> Character.toString((char) c))
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())))).collect(Collectors.toList());
 
-        System.out.println(vallll);
+        System.out.println("valll ------>"+vallll);
 
 
         System.out.println("**************************************************");
@@ -101,5 +101,48 @@ public class Streamers {
         System.out.println(employeeList.stream().collect(Collectors.partitioningBy(i -> i.getAge()>25)));
 
         System.out.println(employeeList.stream().max(Comparator.comparingInt(Employee::getAge)).get());
+
+        List<Integer> li = Arrays.asList(1,2,3,1,2,3);
+        System.out.println(li.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting())));
+
+        System.out.println(li.stream().collect(Collectors.partitioningBy(i -> i>2)));
+
+        System.out.println(employeeList.stream().collect(Collectors.groupingBy(Employee::getDepartment,Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary)))));
+
+        List<String> lis = Arrays.asList("qwert","trewq");
+        List<String> lisF = new ArrayList<>();
+        for (String stri : lis) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(stri);
+            sb.reverse();
+            lisF.add(sb.toString());
+        }
+        System.out.println(lisF);
+
+
+
+//        List<String> postDetails = Arrays.asList("A101,Topic A,1000,2500,500");
+//
+//        int like = 1;
+//        int comment = 2;
+//        int share = 5;
+//
+//        Map<String, Integer> map = new HashMap<>();
+//        for (String str1 : postDetails) {
+//            String[] res1 = str1.split(",");
+//            int lval = Integer.parseInt(res1[2]);
+//            int cval = Integer.parseInt(res1[2])*2;
+//            int sval = Integer.parseInt(res1[2])*3;
+//            int sum = lval+cval+sval;
+//            map.put(res1[1],sum);
+//
+//        }
+//        int ressss = 0;
+//        for (Map.Entry<String,Integer> m : map.entrySet()) {
+//            if (m.getValue()>0) {
+//                ressss = res
+//
+//            }
+//        }
     }
 }
