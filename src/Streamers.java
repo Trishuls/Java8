@@ -40,7 +40,7 @@ public class Streamers {
         System.out.println("maleAndFemaleSalary salary --> "+maleAndFemaleSalary);
 
         //Who has the most working experience in the organization?
-        Employee employee = employeeList.stream().sorted(Comparator.comparingInt(Employee::getYearOfJoining)).findFirst().get();
+        Employee employee = employeeList.stream().min(Comparator.comparingInt(Employee::getYearOfJoining)).get();
         System.out.println("employee oldest ---> "+employee);
         System.out.println("employee oldest ---> "+employeeList.stream().min(Comparator.comparingInt(Employee::getYearOfJoining)).get());
 
@@ -87,8 +87,8 @@ public class Streamers {
         System.out.println(employeeList.stream().collect(Collectors.groupingBy(Employee::getDepartment, Collectors
                 .averagingDouble(Employee::getSalary))));
 
-        System.out.println(employeeList.stream().filter(e -> e.getGender()=="Male" && e.getDepartment()=="Product Development").collect(Collectors.minBy(Comparator.comparingInt(Employee::getAge))).get());
-        System.out.println(employeeList.stream().filter(e -> e.getGender()=="Male" && e.getDepartment()=="Product Development").min(Comparator.comparingInt(Employee::getAge)).get());
+        employeeList.stream().filter(e -> Objects.equals(e.getGender(), "Male") && Objects.equals(e.getDepartment(), "Product Development")).min(Comparator.comparingInt(Employee::getAge)).ifPresent(System.out::println);
+        employeeList.stream().filter(e -> Objects.equals(e.getGender(), "Male") && Objects.equals(e.getDepartment(), "Product Development")).min(Comparator.comparingInt(Employee::getAge)).ifPresent(System.out::println);
 
         System.out.println(employeeList.stream().min(Comparator.comparingInt(Employee::getYearOfJoining)).get());
 
@@ -144,5 +144,16 @@ public class Streamers {
 //
 //            }
 //        }
+
+//        int intVal = 11234456;
+        List<Integer> intVal = Arrays.asList(2,2,3,4,5,5,6,7);
+        Set<Integer> resd = intVal.stream().filter(i -> Collections.frequency(intVal, i) == 1).collect(Collectors.toSet());
+        System.out.println(resd);
+//        Set<Integer> set = new HashSet<>();
+//        String.valueOf(intVal).chars().mapToObj(i -> Character.toString((char)i)).filter(s -> !set.add(Integer.valueOf(s))).forEach(System.out::println);
+//        System.out.println(set);
+
+        int[] arr = {1,2,2,3,4,4,5};
+        Arrays.stream(arr).boxed().collect(Collectors.groupingBy(Function.identity(),Collectors.counting())).entrySet().stream().filter(i -> i.getValue()==1).map(Map.Entry::getKey).collect(Collectors.toList()).forEach(System.out::println);
     }
 }
